@@ -1,0 +1,18 @@
+[package]
+name = "test_php"
+version = "0.1.0"
+authors = ["Paweł Chojnacki <pawel.chcki@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+"php-5x" = {path = "../php-5x"}
+libc = "0.2.0"
+
+[lib]
+name = "test_php"
+crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = 3         
+lto = "fat"
+panic = "abort"

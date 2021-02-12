@@ -1,0 +1,9 @@
+[package]
+name = "test_php_macros"
+version = "0.1.0"
+authors = ["Paweł Chojnacki <pawel.chcki@gmail.com>"]
+edition = "2018"
+
+
+[dependencies]
+pproc = { path = "pproc" }

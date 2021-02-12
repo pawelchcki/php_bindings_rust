@@ -1,0 +1,15 @@
+[package]
+name = "pproc"
+version = "0.1.0"
+authors = ["Paweł Chojnacki <pawel.chcki@gmail.com>"]
+edition = "2018"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "1", features = ["full", "extra-traits"] }
+proc-macro2 = "1"
+quote = "1"
+proc-macro-error = "1"
+

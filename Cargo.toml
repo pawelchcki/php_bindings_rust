@@ -1,9 +1,8 @@
-[package]
-name = "php-bindings"
-version = "0.1.0"
-authors = ["Paweł Chojnacki <pawel.chcki@gmail.com>"]
-edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+[workspace]
+members = [
+    "sys/sys-build",
+    "sys/php-5x-sys",
+    "php-5x",
+    "test_php", 
+    "test_php_macros", 
+]

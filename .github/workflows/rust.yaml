@@ -1,0 +1,27 @@
+on: [push]
+name: "NM build"
+
+jobs:
+  check:
+    name: Rust project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          components: rustfmt, clippy, rust-src
+      - name: install nm
+        run: "sudo apt-get update && sudo apt-get -y install binutils"
+      - uses: actions/checkout@v2
+      - name: Run cargo build
+        uses: actions-rs/cargo@v1
+        env:
+          RUSTFLAGS: "-C panic=abort"
+        with:
+          command: +nightly
+          args: "build -Zbuild-std=panic_abort,std --release --target x86_64-unknown-linux-gnu"
+
+      - name: Run nm
+        run: "nm -gD target/x86_64-unknown-linux-gnu/release/libtest_php.so"
