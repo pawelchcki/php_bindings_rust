@@ -1,5 +1,5 @@
 [package]
-name = "pproc"
+name = "php-test-macros"
 version = "0.1.0"
 authors = ["Paweł Chojnacki <pawel.chcki@gmail.com>"]
 edition = "2018"
@@ -8,8 +8,8 @@ edition = "2018"
 proc-macro = true
 
 [dependencies]
+anyhow = "1.0"
+proc-macro2 = "1.0"
 syn = { version = "1", features = ["full", "extra-traits"] }
-proc-macro2 = "1"
-quote = "1"
-proc-macro-error = "1"
-php-5x = { path = "../../php-5x" }
+quote = "1.0"
+php-codegen = { path = "../codegen" }

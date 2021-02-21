@@ -110,11 +110,12 @@ pub fn php_module(_attr: TokenStream, item: TokenStream) -> TokenStream {
             }
         }
     }
-
+    // let mod_const = php_5x::macros::foo(None);
     quote::quote!(
         //generated_php_module
         #vis mod #ident {
 
-        }#semi      
-    ).into()
+        }#semi
+    )
+    .into()
 }

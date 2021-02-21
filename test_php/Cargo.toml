@@ -7,6 +7,8 @@ edition = "2018"
 [dependencies]
 "php-5x" = {path = "../php-5x"}
 libc = "0.2.0"
+php-test-macros = {path = "../php-5x/test-macros"}
+php-5x-sys = { path = "../sys/php-5x-sys" }
 
 [lib]
 name = "test_php"

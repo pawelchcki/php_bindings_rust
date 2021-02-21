@@ -1,4 +1,3 @@
-
 #[allow(unconditional_panic)]
 const fn const_panic() {
     [][0]
@@ -7,8 +6,8 @@ const fn const_panic() {
 #[doc(hidden)]
 pub const fn validate_cstr_contents(bytes: &[u8], nul: bool) {
     let mut i = 0;
-    let check_len = if nul && bytes[bytes.len()-1] == b'\0' {
-        bytes.len()-1usize
+    let check_len = if nul && bytes[bytes.len() - 1] == b'\0' {
+        bytes.len() - 1usize
     } else {
         bytes.len()
     };
@@ -23,14 +22,14 @@ pub const fn validate_cstr_contents(bytes: &[u8], nul: bool) {
 
 #[doc(hidden)]
 pub const fn ensure_is_null_terminated(bytes: &[u8]) {
-    if bytes[bytes.len()-1usize] != b'\0' {
+    if bytes[bytes.len() - 1usize] != b'\0' {
         const_panic()
     }
 }
 
 #[macro_export]
 macro_rules! cstr {
-    ( $s:literal ) => {{
+    ( $s:expr ) => {{
         $crate::cstr::validate_cstr_contents($s.as_bytes(), false);
         unsafe { std::mem::transmute::<_, &std::ffi::CStr>(concat!($s, "\0")) }
     }};
@@ -53,4 +52,3 @@ macro_rules! cstr_u8 {
         unsafe { std::mem::transmute::<_, &std::ffi::CStr>($s as &[u8]) }
     }};
 }
-

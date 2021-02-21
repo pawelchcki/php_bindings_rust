@@ -1,13 +1,13 @@
 [package]
-name = "php-5x"
+name = "php-codegen"
 version = "0.1.0"
 authors = ["Paweł Chojnacki <pawel.chcki@gmail.com>"]
 edition = "2018"
+
+[lib]
 
 [dependencies]
 anyhow = "1.0"
 proc-macro2 = "1.0"
 syn = "1.0"
 quote = "1.0"
-php-5x-sys = { path = "../sys/php-5x-sys" }
-php-test-macros = { path = "test-macros" }

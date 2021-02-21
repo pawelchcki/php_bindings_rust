@@ -1,9 +1,10 @@
 use pproc as pp;
+#[macro_use]
+use php_5x;
+struct Empty {}
 
-struct Empty { }
-
-struct ZTS { 
-    c: String
+struct ZTS {
+    c: String,
 }
 
 // struct Iko {}
@@ -16,7 +17,7 @@ struct ZTS {
 
 trait Context {
     fn pass(&self);
-} 
+}
 
 impl Context for Empty {
     fn pass(&self) {
@@ -44,9 +45,7 @@ impl Context for ZTS {
 mod yellow {
 
     #[module_init]
-    fn init() {
-
-    }
+    fn init() {}
 
     // module_init!(path_to_fn); // TODO
 }
@@ -54,4 +53,3 @@ mod yellow {
 pub fn main() {
     // unsafe { mhh(1,2) };
 }
-

@@ -1,8 +1,6 @@
 use bindgen;
-use std::{collections::HashSet, env};
-use std::{
-    path::{Path, PathBuf},
-};
+use std::collections::HashSet;
+use std::path::{Path, PathBuf};
 
 #[derive(Debug)]
 struct IgnoreMacros(HashSet<String>);
@@ -57,7 +55,13 @@ where
     }
 }
 
-pub fn build_php(bindings_rs: &PathBuf, root_path: &str, include_paths: &[&str], wrapper_h: &PathBuf, check_c_path: Option<&PathBuf>) {
+pub fn build_php(
+    bindings_rs: &PathBuf,
+    root_path: &str,
+    include_paths: &[&str],
+    wrapper_h: &PathBuf,
+    check_c_path: Option<&PathBuf>,
+) {
     println!("cargo:rerun-if-changed={}", wrapper_h.to_str().unwrap());
 
     let include_paths = include_paths
