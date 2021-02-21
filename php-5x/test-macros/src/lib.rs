@@ -1,13 +1,14 @@
 use std::collections::HashSet;
 
-use php_codegen::Args;
 use proc_macro::TokenStream;
-use proc_macro2::{Literal, TokenStream as TokenStream2};
+use proc_macro2::{TokenStream as TokenStream2};
 use quote::quote;
 use syn::{
     parse::{self, Parse, ParseStream, Parser},
     Expr, ItemMod,
 };
+
+mod codegen;
 
 trait TokenStreamParse: Sized {
     fn parse_ts(input: TokenStream2) -> parse::Result<Self> {
@@ -16,9 +17,9 @@ trait TokenStreamParse: Sized {
     fn parse(input: ParseStream) -> syn::Result<Self>;
 }
 
-impl TokenStreamParse for Args {
+impl TokenStreamParse for codegen::Args {
     fn parse(input: ParseStream) -> syn::Result<Self> {
-        let mut args = Args {
+        let mut args = codegen::Args {
             version: None,
             name: None,
         };
@@ -85,13 +86,12 @@ fn render_inside_mod(item: syn::ItemMod, inner: TokenStream2) -> parse::Result<T
 #[proc_macro_attribute]
 pub fn render(attr: TokenStream, item: TokenStream) -> TokenStream {
     pub fn render(_attr: TokenStream2, item: TokenStream2) -> parse::Result<TokenStream2> {
-        let args = Args::parse_ts(_attr)?;
+        let args = codegen::Args::parse_ts(_attr)?;
 
         let m: ItemMod = syn::parse2(item)?;
-        let inner = php_codegen::php56::foo(None, args)?;
+        let inner = codegen::php56::foo(None, args)?;
         render_inside_mod(m, inner)
     }
-    concat!("1", "2");
 
     match render(attr.into(), item.into()) {
         Ok(tokens) => tokens,

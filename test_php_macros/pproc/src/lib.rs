@@ -1,6 +1,6 @@
 use proc_macro::TokenStream;
 use proc_macro2::{Span, TokenStream as TokenStream2};
-use quote::{quote, ToTokens};
+use quote::{quote};
 use syn::{parse::ParseStream, spanned::Spanned, Ident, ItemConst, ItemFn, ItemMod, Signature};
 
 use syn::{
@@ -77,9 +77,9 @@ pub fn php_callback(_attr: TokenStream, item: TokenStream) -> TokenStream {
 pub fn php_module(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let mod_declaration: ItemMod = syn::parse(item).unwrap();
     let ItemMod {
-        attrs,
+        attrs: _,
         vis,
-        mod_token,
+        mod_token: _,
         ident,
         content,
         semi,
@@ -97,7 +97,7 @@ pub fn php_module(_attr: TokenStream, item: TokenStream) -> TokenStream {
                 .into_compile_error()
                 .into();
             }
-            Item::Fn(mut m) => {
+            Item::Fn(m) => {
                 eprintln!("Item::Fn {:?}", m);
             }
             _ => {

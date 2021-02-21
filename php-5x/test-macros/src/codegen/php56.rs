@@ -1,10 +1,8 @@
-use proc_macro2::{Literal, TokenStream as TokenStream2};
+use proc_macro2::{TokenStream as TokenStream2};
 use quote::quote;
 use syn::Path;
 
-use crate::Args;
-
-// pub fn concat(a: proc_macro2: Literal, b: proc_macro2: Literal)
+use super::Args;
 
 pub fn foo(init_fn: Option<Path>, args: Args) -> syn::Result<TokenStream2> {
     let sys = quote!(php_5x_sys::php56);

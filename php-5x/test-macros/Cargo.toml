@@ -12,4 +12,3 @@ anyhow = "1.0"
 proc-macro2 = "1.0"
 syn = { version = "1", features = ["full", "extra-traits"] }
 quote = "1.0"
-php-codegen = { path = "../codegen" }
