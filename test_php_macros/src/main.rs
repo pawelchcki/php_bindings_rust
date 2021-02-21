@@ -34,21 +34,24 @@ impl Context for ZTS {
 //     c.pass();
 // }
 
-#[pp::php_callback]
-fn sampler_function<T: Context>(_args: &str, c: T) {
-    println!("blha");
-    c.pass();
+// #[pp::php_callback]
+// fn sampler_function<T: Context>(_args: &str, c: T) {
+//     println!("blha");
+//     c.pass();
+// }
+
+#[pp::php_module("name", "version")]
+mod yellow {
+
+    #[module_init]
+    fn init() {
+
+    }
+
+    // module_init!(path_to_fn); // TODO
 }
 
 pub fn main() {
-    unsafe { mhh(1,2) };
+    // unsafe { mhh(1,2) };
 }
-
-unsafe extern "C" fn k(a: i32, b:i32) -> i32 {
-    0
-}
-
-
-
-const X: &'static [unsafe extern "C" fn(i32, i32) -> i32] = &[mhh, k, k];
 

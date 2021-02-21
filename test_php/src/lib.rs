@@ -1,6 +1,5 @@
-use std::borrow::Borrow;
+use std::{borrow::Borrow, ptr};
 
-use php_5x::sys as sys;
 use libc;
 
 #[no_mangle]
@@ -11,10 +10,20 @@ pub extern fn php_module_info() {
 
 }
 
+// const MOD: () = {
+//     #[mod_init]
+//     fn mod_init() {
+        
+//     }
+
+// };
+
 #[no_mangle]
 pub extern fn get_module() -> *mut std::ffi::c_void {
-    let z = php_56::create_module().unwrap();
-    return Box::into_raw(z) as *mut std::ffi::c_void;
+    // let z = php_56::create_module().unwrap();
+
+    // return Box::into_raw(z) as *mut std::ffi::c_void;
+    ptr::null_mut()
 }
 
 

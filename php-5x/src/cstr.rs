@@ -28,6 +28,7 @@ pub const fn ensure_is_null_terminated(bytes: &[u8]) {
     }
 }
 
+#[macro_export]
 macro_rules! cstr {
     ( $s:literal ) => {{
         $crate::cstr::validate_cstr_contents($s.as_bytes(), false);
@@ -35,6 +36,7 @@ macro_rules! cstr {
     }};
 }
 
+#[macro_export]
 macro_rules! cstr_with_nul {
     ( $s:literal ) => {{
         $crate::cstr::validate_cstr_contents($s.as_bytes(), true);
@@ -43,6 +45,7 @@ macro_rules! cstr_with_nul {
     }};
 }
 
+#[macro_export]
 macro_rules! cstr_u8 {
     ( $s:path ) => {{
         $crate::cstr::validate_cstr_contents($s, true);
