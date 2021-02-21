@@ -24,6 +24,6 @@ mod tests {
         let m: zend_module_entry = default_module::MOD;
         assert_eq!(from_c_str(m.build_id), "API20131226,NTS");
         assert_eq!(from_c_str(m.version), env!("CARGO_PKG_VERSION"));
-        assert_eq!(from_c_str(m.name), "custom_name");
+        assert_eq!(from_c_str(m.name), env!("CARGO_PKG_NAME"));
     }
 }
