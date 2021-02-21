@@ -1,8 +1,80 @@
-use proc_macro2::{TokenStream as TokenStream2};
+use proc_macro2::{Span, TokenStream as TokenStream2};
 use quote::quote;
-use syn::Path;
+use syn::{parse, spanned::Spanned, FnArg, ItemFn, PatType, Path, Signature};
 
 use super::Args;
+
+pub fn module_fn(original_function: &ItemFn) -> syn::Result<TokenStream2> {
+    let ItemFn {
+        attrs: _,
+        vis: _,
+        sig: signature,
+        block,
+    } = original_function;
+
+    let Signature {
+        constness: _,
+        asyncness: _,
+        unsafety: _,
+        abi: _,
+        fn_token: _,
+        ident,
+        generics: _,
+        paren_token: _,
+        inputs,
+        variadic: _,
+        output,
+    } = signature.clone();
+
+    // TODO add validation that parametr is integer type, or can be .into() it
+    let fn_call = match inputs.len() {
+        0 => {
+            quote! (
+                #ident()
+            )
+        }
+        1 => {
+            quote! (
+                #ident(module_number)
+            )
+        }
+        _ => {
+            return Err(parse::Error::new(
+                signature.span(),
+                "module function has too many arguments",
+            ))
+        }
+    };
+
+    let fn_call_with_result = match output {
+        syn::ReturnType::Default => {
+            quote! {
+                #fn_call;
+                0 // Always a success
+            }
+        }
+        syn::ReturnType::Type(_, _) => {
+            // TODO add validation of output type is really a basic ? some ? Result type :D 
+            quote! {
+                match #fn_call {
+                    Ok(_) => { 0 }
+                    Err(_) => { -1 }
+                }
+            }
+        }
+    };
+
+    Ok(
+        quote!( //TODO: consider not marking this entry funciton as unsafe as it could propagate ??
+            unsafe extern "C" fn #ident(_: ::std::os::raw::c_int, module_number: ::std::os::raw::c_int) -> ::std::os::raw::c_int {
+                // wrap function
+                #signature #block
+
+                #fn_call_with_result
+            }
+        ),
+    )
+}
 
 pub fn foo(init_fn: Option<Path>, args: Args) -> syn::Result<TokenStream2> {
     let sys = quote!(php_5x_sys::php56);
