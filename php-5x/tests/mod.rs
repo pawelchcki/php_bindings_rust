@@ -36,7 +36,7 @@ mod tests {
 
     #[test]
     fn module_init_is_set_correctly() {
-        let m: zend_module_entry = unsafe { module_with_init::MOD };
+        let _m: zend_module_entry = unsafe { module_with_init::MOD };
 
         // assert_eq!(m.module_startup_func.unwrap(), module_with_init::init);
     }

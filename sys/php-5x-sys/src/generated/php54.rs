@@ -2339,6 +2339,8 @@ pub const PHP_LOGO_GUID: &'static [u8; 40usize] = b"PHPE9568F34-D428-11d2-A769-0
 pub const PHP_EGG_LOGO_GUID: &'static [u8; 40usize] = b"PHPE9568F36-D428-11d2-A769-00AA001ACF42\0";
 pub const ZEND_LOGO_GUID: &'static [u8; 40usize] = b"PHPE9568F35-D428-11d2-A769-00AA001ACF42\0";
 pub const PHP_CREDITS_GUID: &'static [u8; 40usize] = b"PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000\0";
+pub const ZEND_EXTENSION_API_NO: u32 = 220100525;
+pub const ZEND_EXTMSG_NEW_EXTENSION: u32 = 1;
 pub type size_t = ::std::os::raw::c_ulong;
 pub type __dev_t = ::std::os::raw::c_ulong;
 pub type __uid_t = ::std::os::raw::c_uint;
@@ -20174,6 +20176,384 @@ extern "C" {
 }
 extern "C" {
     pub fn php_get_uname(mode: ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
+}
+pub type zend_extension = _zend_extension;
+pub type startup_func_t = ::std::option::Option<
+    unsafe extern "C" fn(extension: *mut zend_extension) -> ::std::os::raw::c_int,
+>;
+pub type shutdown_func_t =
+    ::std::option::Option<unsafe extern "C" fn(extension: *mut zend_extension)>;
+pub type activate_func_t = ::std::option::Option<unsafe extern "C" fn()>;
+pub type deactivate_func_t = ::std::option::Option<unsafe extern "C" fn()>;
+pub type message_handler_func_t = ::std::option::Option<
+    unsafe extern "C" fn(message: ::std::os::raw::c_int, arg: *mut ::std::os::raw::c_void),
+>;
+pub type op_array_handler_func_t =
+    ::std::option::Option<unsafe extern "C" fn(op_array: *mut zend_op_array)>;
+pub type statement_handler_func_t =
+    ::std::option::Option<unsafe extern "C" fn(op_array: *mut zend_op_array)>;
+pub type fcall_begin_handler_func_t =
+    ::std::option::Option<unsafe extern "C" fn(op_array: *mut zend_op_array)>;
+pub type fcall_end_handler_func_t =
+    ::std::option::Option<unsafe extern "C" fn(op_array: *mut zend_op_array)>;
+pub type op_array_ctor_func_t =
+    ::std::option::Option<unsafe extern "C" fn(op_array: *mut zend_op_array)>;
+pub type op_array_dtor_func_t =
+    ::std::option::Option<unsafe extern "C" fn(op_array: *mut zend_op_array)>;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_extension {
+    pub name: *mut ::std::os::raw::c_char,
+    pub version: *mut ::std::os::raw::c_char,
+    pub author: *mut ::std::os::raw::c_char,
+    pub URL: *mut ::std::os::raw::c_char,
+    pub copyright: *mut ::std::os::raw::c_char,
+    pub startup: startup_func_t,
+    pub shutdown: shutdown_func_t,
+    pub activate: activate_func_t,
+    pub deactivate: deactivate_func_t,
+    pub message_handler: message_handler_func_t,
+    pub op_array_handler: op_array_handler_func_t,
+    pub statement_handler: statement_handler_func_t,
+    pub fcall_begin_handler: fcall_begin_handler_func_t,
+    pub fcall_end_handler: fcall_end_handler_func_t,
+    pub op_array_ctor: op_array_ctor_func_t,
+    pub op_array_dtor: op_array_dtor_func_t,
+    pub api_no_check: ::std::option::Option<
+        unsafe extern "C" fn(api_no: ::std::os::raw::c_int) -> ::std::os::raw::c_int,
+    >,
+    pub build_id_check: ::std::option::Option<
+        unsafe extern "C" fn(build_id: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int,
+    >,
+    pub reserved3: *mut ::std::os::raw::c_void,
+    pub reserved4: *mut ::std::os::raw::c_void,
+    pub reserved5: *mut ::std::os::raw::c_void,
+    pub reserved6: *mut ::std::os::raw::c_void,
+    pub reserved7: *mut ::std::os::raw::c_void,
+    pub reserved8: *mut ::std::os::raw::c_void,
+    pub handle: *mut ::std::os::raw::c_void,
+    pub resource_number: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout__zend_extension() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_extension>(),
+        208usize,
+        concat!("Size of: ", stringify!(_zend_extension))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_extension>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_extension))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).version as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(version)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).author as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(author)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).URL as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(URL)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).copyright as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(copyright)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).startup as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(startup)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).shutdown as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(shutdown)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).activate as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(activate)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).deactivate as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(deactivate)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).message_handler as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(message_handler)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_extension>())).op_array_handler as *const _ as usize
+        },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(op_array_handler)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_extension>())).statement_handler as *const _ as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(statement_handler)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_extension>())).fcall_begin_handler as *const _ as usize
+        },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(fcall_begin_handler)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_extension>())).fcall_end_handler as *const _ as usize
+        },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(fcall_end_handler)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).op_array_ctor as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(op_array_ctor)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).op_array_dtor as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(op_array_dtor)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).api_no_check as *const _ as usize },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(api_no_check)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).build_id_check as *const _ as usize },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(build_id_check)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).reserved3 as *const _ as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(reserved3)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).reserved4 as *const _ as usize },
+        152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(reserved4)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).reserved5 as *const _ as usize },
+        160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(reserved5)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).reserved6 as *const _ as usize },
+        168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(reserved6)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).reserved7 as *const _ as usize },
+        176usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(reserved7)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).reserved8 as *const _ as usize },
+        184usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(reserved8)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).handle as *const _ as usize },
+        192usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_extension>())).resource_number as *const _ as usize },
+        200usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension),
+            "::",
+            stringify!(resource_number)
+        )
+    );
+}
+extern "C" {
+    pub fn zend_get_resource_handle(extension: *mut zend_extension) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn zend_extension_dispatch_message(
+        message: ::std::os::raw::c_int,
+        arg: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub static mut zend_extensions: zend_llist;
+}
+extern "C" {
+    pub fn zend_extension_dtor(extension: *mut zend_extension);
+}
+extern "C" {
+    pub fn zend_append_version_info(extension: *const zend_extension);
+}
+extern "C" {
+    pub fn zend_startup_extensions_mechanism() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn zend_startup_extensions() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn zend_shutdown_extensions();
+}
+extern "C" {
+    pub fn zend_load_extension(path: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn zend_register_extension(
+        new_extension: *mut zend_extension,
+        handle: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn zend_get_extension(extension_name: *const ::std::os::raw::c_char)
+        -> *mut zend_extension;
 }
 pub const ZEND_MODULE_BUILD_ID_: &'static [u8; 16usize] = b"API20100525,NTS\0";
 pub type __builtin_va_list = [__va_list_tag; 1usize];
