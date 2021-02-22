@@ -2,6 +2,7 @@ use syn::{parse, ItemFn, ItemMod};
 
 pub enum InnerMacros {
     ModuleInit(ItemFn),
+    ModuleInfo(ItemFn)
 }
 
 pub fn parse_inner_macros(module: &ItemMod) -> syn::Result<Vec<InnerMacros>> {
@@ -58,6 +59,8 @@ fn inner_macros_from_fn(f: &ItemFn) -> Vec<InnerMacros> {
             Some(p) => {
                 if p == "module_init" {
                     known_macros.push(InnerMacros::ModuleInit(f.clone()));
+                } else if p == "module_info" {
+                    known_macros.push(InnerMacros::ModuleInfo(f.clone()));
                 }
             }
             None => {}

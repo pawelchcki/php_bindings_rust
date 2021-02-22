@@ -84,6 +84,7 @@ pub fn build_php(
         .whitelist_function("zend.*")
         .whitelist_function("ZEND.*")
         .whitelist_function(".*ZEND")
+        .whitelist_function("php_.*")
         .whitelist_var(".*")
         .raw_line( "#![allow(non_upper_case_globals, non_camel_case_types, non_snake_case, clashing_extern_declarations)]\n")
         .clang_args(clang_args)

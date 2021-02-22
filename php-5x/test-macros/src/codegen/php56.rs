@@ -2,9 +2,11 @@ use proc_macro2::{Span, TokenStream as TokenStream2};
 use quote::quote;
 use syn::{parse, spanned::Spanned, FnArg, ItemFn, PatType, Path, Signature};
 
+use crate::syntax::module::InnerMacros;
+
 use super::Args;
 
-pub fn module_fn(original_function: &ItemFn) -> syn::Result<TokenStream2> {
+pub fn render_init_fn(original_function: &ItemFn) -> syn::Result<TokenStream2> {
     let ItemFn {
         attrs: _,
         vis: _,
@@ -54,7 +56,7 @@ pub fn module_fn(original_function: &ItemFn) -> syn::Result<TokenStream2> {
             }
         }
         syn::ReturnType::Type(_, _) => {
-            // TODO add validation of output type is really a basic ? some ? Result type :D 
+            // TODO add validation of output type is really a basic ? some ? Result type :D
             quote! {
                 match #fn_call {
                     Ok(_) => { 0 }
@@ -76,10 +78,35 @@ pub fn module_fn(original_function: &ItemFn) -> syn::Result<TokenStream2> {
     )
 }
 
-pub fn foo(init_fn: Option<Path>, args: Args) -> syn::Result<TokenStream2> {
+fn module_startup_function_ptr(inner_macros: &Vec<InnerMacros>) -> Option<&syn::Ident> {
+    let f = inner_macros.iter().find_map(|f| match f {
+        InnerMacros::ModuleInit(f) => Some(f),
+        _ => None,
+    });
+
+    f.map(|f| &f.sig).map(|s| &s.ident)
+}
+
+fn module_info_function_ptr(inner_macros: &Vec<InnerMacros>) -> Option<&syn::Ident> {
+    let f = inner_macros.iter().find_map(|f| match f {
+        InnerMacros::ModuleInfo(f) => Some(f),
+        _ => None,
+    });
+
+    f.map(|f| &f.sig).map(|s| &s.ident)
+}
+
+pub fn render_mod(inner_macros: &Vec<InnerMacros>, args: Args) -> syn::Result<TokenStream2> {
     let sys = quote!(php_5x_sys::php56);
-    let none: syn::Path = syn::parse2(quote!(None))?;
-    let module_startup_function = init_fn.unwrap_or(none);
+    let none: syn::Expr = syn::parse2(quote!(None))?;
+    let module_startup_function = module_startup_function_ptr(inner_macros)
+        .map(|f| syn::parse2::<syn::Expr>(quote! (Some(#f))))
+        .unwrap_or(Ok(none.clone()))?;
+    
+    let module_info_function = module_info_function_ptr(inner_macros)
+        .map(|f| syn::parse2::<syn::Expr>(quote! (Some(#f))))
+        .unwrap_or(Ok(none))?;
+
     let version = args
         .version
         .unwrap_or(syn::parse2(quote!(env!("CARGO_PKG_VERSION")))?);
@@ -88,7 +115,7 @@ pub fn foo(init_fn: Option<Path>, args: Args) -> syn::Result<TokenStream2> {
         .unwrap_or(syn::parse2(quote!(env!("CARGO_PKG_NAME")))?);
 
     Ok(quote! (
-        pub const MOD: #sys::zend_module_entry = #sys::zend_module_entry {
+         pub const MOD: #sys::zend_module_entry = #sys::zend_module_entry {
             size: ::std::mem::size_of::<#sys::zend_module_entry>() as u16,
             zend_api: #sys::ZEND_MODULE_API_NO,
             zend_debug: #sys::DEBUG_ZEND as u8,
@@ -101,7 +128,7 @@ pub fn foo(init_fn: Option<Path>, args: Args) -> syn::Result<TokenStream2> {
             module_shutdown_func: None,
             request_startup_func: None,
             request_shutdown_func: None,
-            info_func: None,
+            info_func: #module_info_function,
             version: ::php_5x::cstr!(#version).as_ptr(),
             globals_size: 0,
             globals_ptr: ::std::ptr::null_mut(),

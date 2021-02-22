@@ -26,4 +26,18 @@ mod tests {
         assert_eq!(from_c_str(m.version), env!("CARGO_PKG_VERSION"));
         assert_eq!(from_c_str(m.name), env!("CARGO_PKG_NAME"));
     }
+    #[php_test_macros::php_module]
+    mod module_with_init {
+        #[module_init]
+        fn init() {
+
+        }
+    }
+
+    #[test]
+    fn module_init_is_set_correctly() {
+        let m: zend_module_entry = module_with_init::MOD;
+
+        // assert_eq!(m.module_startup_func.unwrap(), module_with_init::init);
+    }
 }
