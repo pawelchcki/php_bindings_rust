@@ -11,7 +11,7 @@ mod tests {
 
     #[test]
     fn valid_custom_name_and_version() {
-        let m: zend_module_entry = custom_module_params::MOD;
+        let m: zend_module_entry = unsafe { custom_module_params::MOD };
         assert_eq!(from_c_str(m.build_id), "API20131226,NTS");
         assert_eq!(from_c_str(m.version), "custom_version");
         assert_eq!(from_c_str(m.name), "custom_name");
@@ -21,7 +21,7 @@ mod tests {
     mod default_module {}
     #[test]
     fn expected_custom_name_and_version() {
-        let m: zend_module_entry = default_module::MOD;
+        let m: zend_module_entry = unsafe { default_module::MOD };
         assert_eq!(from_c_str(m.build_id), "API20131226,NTS");
         assert_eq!(from_c_str(m.version), env!("CARGO_PKG_VERSION"));
         assert_eq!(from_c_str(m.name), env!("CARGO_PKG_NAME"));
@@ -36,7 +36,7 @@ mod tests {
 
     #[test]
     fn module_init_is_set_correctly() {
-        let m: zend_module_entry = module_with_init::MOD;
+        let m: zend_module_entry = unsafe { module_with_init::MOD };
 
         // assert_eq!(m.module_startup_func.unwrap(), module_with_init::init);
     }

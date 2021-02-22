@@ -115,7 +115,7 @@ pub fn render_mod(inner_macros: &Vec<InnerMacros>, args: Args) -> syn::Result<To
         .unwrap_or(syn::parse2(quote!(env!("CARGO_PKG_NAME")))?);
 
     Ok(quote! (
-         pub const MOD: #sys::zend_module_entry = #sys::zend_module_entry {
+         pub static mut MOD: #sys::zend_module_entry = #sys::zend_module_entry {
             size: ::std::mem::size_of::<#sys::zend_module_entry>() as u16,
             zend_api: #sys::ZEND_MODULE_API_NO,
             zend_debug: #sys::DEBUG_ZEND as u8,
