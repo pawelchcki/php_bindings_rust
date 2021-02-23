@@ -2667,6 +2667,34 @@ pub type ulong = ::std::os::raw::c_ulong;
 pub type uint = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct __sigset_t {
+    pub __val: [::std::os::raw::c_ulong; 16usize],
+}
+#[test]
+fn bindgen_test_layout___sigset_t() {
+    assert_eq!(
+        ::std::mem::size_of::<__sigset_t>(),
+        128usize,
+        concat!("Size of: ", stringify!(__sigset_t))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<__sigset_t>(),
+        8usize,
+        concat!("Alignment of ", stringify!(__sigset_t))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__sigset_t>())).__val as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sigset_t),
+            "::",
+            stringify!(__val)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct timeval {
     pub tv_sec: __time_t,
     pub tv_usec: __suseconds_t,
@@ -3353,6 +3381,7 @@ extern "C" {
 extern "C" {
     pub static mut getdate_err: ::std::os::raw::c_int;
 }
+pub type __jmp_buf = [::std::os::raw::c_long; 8usize];
 pub const PTHREAD_CREATE_JOINABLE: ::std::os::raw::c_uint = 0;
 pub const PTHREAD_CREATE_DETACHED: ::std::os::raw::c_uint = 1;
 pub type _bindgen_ty_5 = ::std::os::raw::c_uint;
@@ -3494,11 +3523,101 @@ pub type _bindgen_ty_24 = ::std::os::raw::c_uint;
 pub const SS_ONSTACK: ::std::os::raw::c_uint = 1;
 pub const SS_DISABLE: ::std::os::raw::c_uint = 2;
 pub type _bindgen_ty_25 = ::std::os::raw::c_uint;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_leak_info {
+    pub addr: *mut ::std::os::raw::c_void,
+    pub size: size_t,
+    pub filename: *const ::std::os::raw::c_char,
+    pub lineno: uint,
+    pub orig_filename: *const ::std::os::raw::c_char,
+    pub orig_lineno: uint,
+}
+#[test]
+fn bindgen_test_layout__zend_leak_info() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_leak_info>(),
+        48usize,
+        concat!("Size of: ", stringify!(_zend_leak_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_leak_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_leak_info))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_leak_info>())).addr as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_leak_info),
+            "::",
+            stringify!(addr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_leak_info>())).size as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_leak_info),
+            "::",
+            stringify!(size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_leak_info>())).filename as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_leak_info),
+            "::",
+            stringify!(filename)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_leak_info>())).lineno as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_leak_info),
+            "::",
+            stringify!(lineno)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_leak_info>())).orig_filename as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_leak_info),
+            "::",
+            stringify!(orig_filename)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_leak_info>())).orig_lineno as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_leak_info),
+            "::",
+            stringify!(orig_lineno)
+        )
+    );
+}
+pub type zend_leak_info = _zend_leak_info;
 extern "C" {
     pub fn zend_strndup(
         s: *const ::std::os::raw::c_char,
         length: ::std::os::raw::c_uint,
     ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn _zend_mem_block_size(
+        ptr: *mut ::std::os::raw::c_void,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> size_t;
 }
 extern "C" {
     pub fn zend_set_memory_limit(memory_limit: size_t) -> ::std::os::raw::c_int;
@@ -3531,6 +3650,22 @@ extern "C" {
         silent: ::std::os::raw::c_int,
         tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn _zend_mm_alloc(heap: *mut zend_mm_heap, size: size_t) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn _zend_mm_free(heap: *mut zend_mm_heap, p: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn _zend_mm_realloc(
+        heap: *mut zend_mm_heap,
+        p: *mut ::std::os::raw::c_void,
+        size: size_t,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn _zend_mm_block_size(heap: *mut zend_mm_heap, p: *mut ::std::os::raw::c_void) -> size_t;
 }
 pub type zend_mm_storage = _zend_mm_storage;
 #[repr(C)]
@@ -3756,6 +3891,11 @@ pub type zend_bool = ::std::os::raw::c_uchar;
 pub type zend_uchar = ::std::os::raw::c_uchar;
 pub type zend_uint = ::std::os::raw::c_uint;
 pub type zend_ulong = ::std::os::raw::c_ulong;
+pub type zend_ushort = ::std::os::raw::c_ushort;
+pub type zend_long64 = ::std::os::raw::c_longlong;
+pub type zend_ulong64 = ::std::os::raw::c_ulonglong;
+pub type zend_intptr_t = ::std::os::raw::c_long;
+pub type zend_uintptr_t = ::std::os::raw::c_ulong;
 pub type zend_object_handle = ::std::os::raw::c_uint;
 pub type zend_object_handlers = _zend_object_handlers;
 pub type zval = _zval_struct;
@@ -3826,6 +3966,9 @@ extern "C" {
 extern "C" {
     pub static long_min_digits: [::std::os::raw::c_char; 20usize];
 }
+pub const ZEND_RESULT_CODE_SUCCESS: ZEND_RESULT_CODE = 0;
+pub const ZEND_RESULT_CODE_FAILURE: ZEND_RESULT_CODE = -1;
+pub type ZEND_RESULT_CODE = ::std::os::raw::c_int;
 pub type compare_func_t = ::std::option::Option<
     unsafe extern "C" fn(
         arg1: *const ::std::os::raw::c_void,
@@ -4169,10 +4312,60 @@ pub type merge_checker_func_t = ::std::option::Option<
 >;
 pub type HashPosition = *mut Bucket;
 extern "C" {
+    pub fn _zend_hash_init(
+        ht: *mut HashTable,
+        nSize: uint,
+        pDestructor: dtor_func_t,
+        persistent: zend_bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_hash_init_ex(
+        ht: *mut HashTable,
+        nSize: uint,
+        pDestructor: dtor_func_t,
+        persistent: zend_bool,
+        bApplyProtection: zend_bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn zend_hash_destroy(ht: *mut HashTable);
 }
 extern "C" {
     pub fn zend_hash_clean(ht: *mut HashTable);
+}
+extern "C" {
+    pub fn _zend_hash_add_or_update(
+        ht: *mut HashTable,
+        arKey: *const ::std::os::raw::c_char,
+        nKeyLength: uint,
+        pData: *mut ::std::os::raw::c_void,
+        nDataSize: uint,
+        pDest: *mut *mut ::std::os::raw::c_void,
+        flag: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_hash_quick_add_or_update(
+        ht: *mut HashTable,
+        arKey: *const ::std::os::raw::c_char,
+        nKeyLength: uint,
+        h: ulong,
+        pData: *mut ::std::os::raw::c_void,
+        nDataSize: uint,
+        pDest: *mut *mut ::std::os::raw::c_void,
+        flag: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_hash_index_update_or_next_insert(
+        ht: *mut HashTable,
+        h: ulong,
+        pData: *mut ::std::os::raw::c_void,
+        nDataSize: uint,
+        pDest: *mut *mut ::std::os::raw::c_void,
+        flag: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn zend_hash_add_empty_element(
@@ -4415,6 +4608,16 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn _zend_hash_merge(
+        target: *mut HashTable,
+        source: *mut HashTable,
+        pCopyConstructor: copy_ctor_func_t,
+        tmp: *mut ::std::os::raw::c_void,
+        size: uint,
+        overwrite: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn zend_hash_merge_ex(
         target: *mut HashTable,
         source: *mut HashTable,
@@ -4459,6 +4662,18 @@ extern "C" {
 }
 extern "C" {
     pub fn zend_hash_reindex(ht: *mut HashTable, only_integer_keys: zend_bool);
+}
+extern "C" {
+    pub fn _zend_hash_splice(
+        ht: *mut HashTable,
+        nDataSize: uint,
+        pCopyConstructor: copy_ctor_func_t,
+        offset: uint,
+        length: uint,
+        list: *mut *mut ::std::os::raw::c_void,
+        list_count: uint,
+        removed: *mut HashTable,
+    );
 }
 extern "C" {
     pub fn zend_hash_func(arKey: *const ::std::os::raw::c_char, nKeyLength: uint) -> ulong;
@@ -4526,10 +4741,60 @@ fn bindgen_test_layout__zend_ts_hashtable() {
 }
 pub type TsHashTable = _zend_ts_hashtable;
 extern "C" {
+    pub fn _zend_ts_hash_init(
+        ht: *mut TsHashTable,
+        nSize: uint,
+        pDestructor: dtor_func_t,
+        persistent: zend_bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_ts_hash_init_ex(
+        ht: *mut TsHashTable,
+        nSize: uint,
+        pDestructor: dtor_func_t,
+        persistent: zend_bool,
+        bApplyProtection: zend_bool,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn zend_ts_hash_destroy(ht: *mut TsHashTable);
 }
 extern "C" {
     pub fn zend_ts_hash_clean(ht: *mut TsHashTable);
+}
+extern "C" {
+    pub fn _zend_ts_hash_add_or_update(
+        ht: *mut TsHashTable,
+        arKey: *mut ::std::os::raw::c_char,
+        nKeyLength: uint,
+        pData: *mut ::std::os::raw::c_void,
+        nDataSize: uint,
+        pDest: *mut *mut ::std::os::raw::c_void,
+        flag: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_ts_hash_quick_add_or_update(
+        ht: *mut TsHashTable,
+        arKey: *mut ::std::os::raw::c_char,
+        nKeyLength: uint,
+        h: ulong,
+        pData: *mut ::std::os::raw::c_void,
+        nDataSize: uint,
+        pDest: *mut *mut ::std::os::raw::c_void,
+        flag: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_ts_hash_index_update_or_next_insert(
+        ht: *mut TsHashTable,
+        h: ulong,
+        pData: *mut ::std::os::raw::c_void,
+        nDataSize: uint,
+        pDest: *mut *mut ::std::os::raw::c_void,
+        flag: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn zend_ts_hash_add_empty_element(
@@ -4987,6 +5252,79 @@ extern "C" {
 pub type zend_class_entry = _zend_class_entry;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct _zend_guard {
+    pub in_get: zend_bool,
+    pub in_set: zend_bool,
+    pub in_unset: zend_bool,
+    pub in_isset: zend_bool,
+    pub dummy: zend_bool,
+}
+#[test]
+fn bindgen_test_layout__zend_guard() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_guard>(),
+        5usize,
+        concat!("Size of: ", stringify!(_zend_guard))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_guard>(),
+        1usize,
+        concat!("Alignment of ", stringify!(_zend_guard))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_guard>())).in_get as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_guard),
+            "::",
+            stringify!(in_get)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_guard>())).in_set as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_guard),
+            "::",
+            stringify!(in_set)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_guard>())).in_unset as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_guard),
+            "::",
+            stringify!(in_unset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_guard>())).in_isset as *const _ as usize },
+        3usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_guard),
+            "::",
+            stringify!(in_isset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_guard>())).dummy as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_guard),
+            "::",
+            stringify!(dummy)
+        )
+    );
+}
+pub type zend_guard = _zend_guard;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct _zend_object {
     pub ce: *mut zend_class_entry,
     pub properties: *mut HashTable,
@@ -5178,6 +5516,9 @@ pub type zend_object_add_ref_t = ::std::option::Option<
     unsafe extern "C" fn(object: *mut zval, tsrm_ls: *mut *mut *mut ::std::os::raw::c_void),
 >;
 pub type zend_object_del_ref_t = ::std::option::Option<
+    unsafe extern "C" fn(object: *mut zval, tsrm_ls: *mut *mut *mut ::std::os::raw::c_void),
+>;
+pub type zend_object_delete_obj_t = ::std::option::Option<
     unsafe extern "C" fn(object: *mut zval, tsrm_ls: *mut *mut *mut ::std::os::raw::c_void),
 >;
 pub type zend_object_clone_obj_t = ::std::option::Option<
@@ -5734,6 +6075,14 @@ extern "C" {
     );
 }
 pub type zend_ast = _zend_ast;
+pub const _zend_ast_kind_ZEND_CONST: _zend_ast_kind = 256;
+pub const _zend_ast_kind_ZEND_BOOL_AND: _zend_ast_kind = 257;
+pub const _zend_ast_kind_ZEND_BOOL_OR: _zend_ast_kind = 258;
+pub const _zend_ast_kind_ZEND_SELECT: _zend_ast_kind = 259;
+pub const _zend_ast_kind_ZEND_UNARY_PLUS: _zend_ast_kind = 260;
+pub const _zend_ast_kind_ZEND_UNARY_MINUS: _zend_ast_kind = 261;
+pub type _zend_ast_kind = ::std::os::raw::c_uint;
+pub use self::_zend_ast_kind as zend_ast_kind;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct _zend_ast {
@@ -8030,6 +8379,9 @@ extern "C" {
     pub fn zend_set_utility_values(utility_values: *mut zend_utility_values);
 }
 extern "C" {
+    pub fn _zend_bailout(filename: *mut ::std::os::raw::c_char, lineno: uint);
+}
+extern "C" {
     pub fn zend_make_printable_zval(
         expr: *mut zval,
         expr_copy: *mut zval,
@@ -8308,6 +8660,240 @@ fn bindgen_test_layout__gc_root_buffer() {
     );
 }
 pub type gc_root_buffer = _gc_root_buffer;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct _zval_gc_info {
+    pub z: zval,
+    pub u: _zval_gc_info__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union _zval_gc_info__bindgen_ty_1 {
+    pub buffered: *mut gc_root_buffer,
+    pub next: *mut _zval_gc_info,
+    _bindgen_union_align: u64,
+}
+#[test]
+fn bindgen_test_layout__zval_gc_info__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<_zval_gc_info__bindgen_ty_1>(),
+        8usize,
+        concat!("Size of: ", stringify!(_zval_gc_info__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zval_gc_info__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zval_gc_info__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zval_gc_info__bindgen_ty_1>())).buffered as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zval_gc_info__bindgen_ty_1),
+            "::",
+            stringify!(buffered)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zval_gc_info__bindgen_ty_1>())).next as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zval_gc_info__bindgen_ty_1),
+            "::",
+            stringify!(next)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout__zval_gc_info() {
+    assert_eq!(
+        ::std::mem::size_of::<_zval_gc_info>(),
+        32usize,
+        concat!("Size of: ", stringify!(_zval_gc_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zval_gc_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zval_gc_info))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zval_gc_info>())).z as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zval_gc_info),
+            "::",
+            stringify!(z)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zval_gc_info>())).u as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zval_gc_info),
+            "::",
+            stringify!(u)
+        )
+    );
+}
+pub type zval_gc_info = _zval_gc_info;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct _zend_gc_globals {
+    pub gc_enabled: zend_bool,
+    pub gc_active: zend_bool,
+    pub buf: *mut gc_root_buffer,
+    pub roots: gc_root_buffer,
+    pub unused: *mut gc_root_buffer,
+    pub first_unused: *mut gc_root_buffer,
+    pub last_unused: *mut gc_root_buffer,
+    pub zval_to_free: *mut zval_gc_info,
+    pub free_list: *mut zval_gc_info,
+    pub next_to_free: *mut zval_gc_info,
+    pub gc_runs: zend_uint,
+    pub collected: zend_uint,
+}
+#[test]
+fn bindgen_test_layout__zend_gc_globals() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_gc_globals>(),
+        104usize,
+        concat!("Size of: ", stringify!(_zend_gc_globals))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_gc_globals>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_gc_globals))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).gc_enabled as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(gc_enabled)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).gc_active as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(gc_active)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).buf as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(buf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).roots as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(roots)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).unused as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(unused)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).first_unused as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(first_unused)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).last_unused as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(last_unused)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).zval_to_free as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(zval_to_free)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).free_list as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(free_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).next_to_free as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(next_to_free)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).gc_runs as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(gc_runs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_gc_globals>())).collected as *const _ as usize },
+        100usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_gc_globals),
+            "::",
+            stringify!(collected)
+        )
+    );
+}
+pub type zend_gc_globals = _zend_gc_globals;
 extern "C" {
     pub static mut gc_globals_id: ::std::os::raw::c_int;
 }
@@ -8592,6 +9178,139 @@ extern "C" {
 }
 pub type zend_op_array = _zend_op_array;
 pub type zend_op = _zend_op;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_compiler_context {
+    pub opcodes_size: zend_uint,
+    pub vars_size: ::std::os::raw::c_int,
+    pub literals_size: ::std::os::raw::c_int,
+    pub current_brk_cont: ::std::os::raw::c_int,
+    pub backpatch_count: ::std::os::raw::c_int,
+    pub nested_calls: ::std::os::raw::c_int,
+    pub used_stack: ::std::os::raw::c_int,
+    pub in_finally: ::std::os::raw::c_int,
+    pub labels: *mut HashTable,
+}
+#[test]
+fn bindgen_test_layout__zend_compiler_context() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_compiler_context>(),
+        40usize,
+        concat!("Size of: ", stringify!(_zend_compiler_context))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_compiler_context>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_compiler_context))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).opcodes_size as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(opcodes_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).vars_size as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(vars_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).literals_size as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(literals_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).current_brk_cont as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(current_brk_cont)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).backpatch_count as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(backpatch_count)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).nested_calls as *const _ as usize
+        },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(nested_calls)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).used_stack as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(used_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_context>())).in_finally as *const _ as usize
+        },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(in_finally)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_compiler_context>())).labels as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_context),
+            "::",
+            stringify!(labels)
+        )
+    );
+}
+pub type zend_compiler_context = _zend_compiler_context;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct _zend_literal {
@@ -9076,6 +9795,46 @@ fn bindgen_test_layout__zend_brk_cont_element() {
 pub type zend_brk_cont_element = _zend_brk_cont_element;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct _zend_label {
+    pub brk_cont: ::std::os::raw::c_int,
+    pub opline_num: zend_uint,
+}
+#[test]
+fn bindgen_test_layout__zend_label() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_label>(),
+        8usize,
+        concat!("Size of: ", stringify!(_zend_label))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_label>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_zend_label))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_label>())).brk_cont as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_label),
+            "::",
+            stringify!(brk_cont)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_label>())).opline_num as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_label),
+            "::",
+            stringify!(opline_num)
+        )
+    );
+}
+pub type zend_label = _zend_label;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct _zend_try_catch_element {
     pub try_op: zend_uint,
     pub catch_op: zend_uint,
@@ -9252,6 +10011,7 @@ fn bindgen_test_layout__zend_property_info() {
         )
     );
 }
+pub type zend_property_info = _zend_property_info;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _zend_arg_info {
@@ -9360,6 +10120,133 @@ fn bindgen_test_layout__zend_arg_info() {
     );
 }
 pub type zend_arg_info = _zend_arg_info;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_internal_function_info {
+    pub _name: *const ::std::os::raw::c_char,
+    pub _name_len: zend_uint,
+    pub _class_name: *const ::std::os::raw::c_char,
+    pub required_num_args: zend_uint,
+    pub _type_hint: zend_uchar,
+    pub return_reference: zend_bool,
+    pub _allow_null: zend_bool,
+    pub _is_variadic: zend_bool,
+}
+#[test]
+fn bindgen_test_layout__zend_internal_function_info() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_internal_function_info>(),
+        32usize,
+        concat!("Size of: ", stringify!(_zend_internal_function_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_internal_function_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_internal_function_info))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>()))._name as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(_name)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>()))._name_len as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(_name_len)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>()))._class_name as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(_class_name)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>())).required_num_args as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(required_num_args)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>()))._type_hint as *const _ as usize
+        },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(_type_hint)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>())).return_reference as *const _
+                as usize
+        },
+        29usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(return_reference)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>()))._allow_null as *const _
+                as usize
+        },
+        30usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(_allow_null)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_internal_function_info>()))._is_variadic as *const _
+                as usize
+        },
+        31usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_internal_function_info),
+            "::",
+            stringify!(_is_variadic)
+        )
+    );
+}
+pub type zend_internal_function_info = _zend_internal_function_info;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _zend_compiled_variable {
@@ -10190,6 +11077,113 @@ fn bindgen_test_layout__zend_function_state() {
 pub type zend_function_state = _zend_function_state;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct _zend_function_call_entry {
+    pub fbc: *mut zend_function,
+    pub arg_num: zend_uint,
+    pub uses_argument_unpacking: zend_bool,
+}
+#[test]
+fn bindgen_test_layout__zend_function_call_entry() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_function_call_entry>(),
+        16usize,
+        concat!("Size of: ", stringify!(_zend_function_call_entry))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_function_call_entry>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_function_call_entry))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_function_call_entry>())).fbc as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_function_call_entry),
+            "::",
+            stringify!(fbc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_function_call_entry>())).arg_num as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_function_call_entry),
+            "::",
+            stringify!(arg_num)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_function_call_entry>())).uses_argument_unpacking
+                as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_function_call_entry),
+            "::",
+            stringify!(uses_argument_unpacking)
+        )
+    );
+}
+pub type zend_function_call_entry = _zend_function_call_entry;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct _zend_switch_entry {
+    pub cond: znode,
+    pub default_case: ::std::os::raw::c_int,
+    pub control_var: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout__zend_switch_entry() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_switch_entry>(),
+        48usize,
+        concat!("Size of: ", stringify!(_zend_switch_entry))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_switch_entry>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_switch_entry))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_switch_entry>())).cond as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_switch_entry),
+            "::",
+            stringify!(cond)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_switch_entry>())).default_case as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_switch_entry),
+            "::",
+            stringify!(default_case)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_switch_entry>())).control_var as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_switch_entry),
+            "::",
+            stringify!(control_var)
+        )
+    );
+}
+pub type zend_switch_entry = _zend_switch_entry;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct _call_slot {
     pub fbc: *mut zend_function,
     pub object: *mut zval,
@@ -10480,6 +11474,61 @@ fn bindgen_test_layout__zend_execute_data() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct __jmp_buf_tag {
+    pub __jmpbuf: __jmp_buf,
+    pub __mask_was_saved: ::std::os::raw::c_int,
+    pub __saved_mask: __sigset_t,
+}
+#[test]
+fn bindgen_test_layout___jmp_buf_tag() {
+    assert_eq!(
+        ::std::mem::size_of::<__jmp_buf_tag>(),
+        200usize,
+        concat!("Size of: ", stringify!(__jmp_buf_tag))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<__jmp_buf_tag>(),
+        8usize,
+        concat!("Alignment of ", stringify!(__jmp_buf_tag))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__jmp_buf_tag>())).__jmpbuf as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__jmp_buf_tag),
+            "::",
+            stringify!(__jmpbuf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__jmp_buf_tag>())).__mask_was_saved as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__jmp_buf_tag),
+            "::",
+            stringify!(__mask_was_saved)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<__jmp_buf_tag>())).__saved_mask as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__jmp_buf_tag),
+            "::",
+            stringify!(__saved_mask)
+        )
+    );
+}
+pub type jmp_buf = [__jmp_buf_tag; 1usize];
+pub type zend_compiler_globals = _zend_compiler_globals;
+pub type zend_executor_globals = _zend_executor_globals;
+pub type zend_php_scanner_globals = _zend_php_scanner_globals;
+pub type zend_ini_scanner_globals = _zend_ini_scanner_globals;
 extern "C" {
     pub fn zendparse(compiler_globals: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
 }
@@ -11243,6 +12292,15 @@ pub struct _zend_encoding {
     _unused: [u8; 0],
 }
 pub type zend_encoding = _zend_encoding;
+pub type zend_encoding_filter = ::std::option::Option<
+    unsafe extern "C" fn(
+        str_: *mut *mut ::std::os::raw::c_uchar,
+        str_length: *mut size_t,
+        buf: *const ::std::os::raw::c_uchar,
+        length: size_t,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> size_t,
+>;
 pub type zend_encoding_fetcher = ::std::option::Option<
     unsafe extern "C" fn(
         encoding_name: *const ::std::os::raw::c_char,
@@ -11545,7 +12603,2025 @@ extern "C" {
 extern "C" {
     pub static mut executor_globals_id: ::std::os::raw::c_int;
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct _zend_declarables {
+    pub ticks: zval,
+}
+#[test]
+fn bindgen_test_layout__zend_declarables() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_declarables>(),
+        24usize,
+        concat!("Size of: ", stringify!(_zend_declarables))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_declarables>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_declarables))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_declarables>())).ticks as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_declarables),
+            "::",
+            stringify!(ticks)
+        )
+    );
+}
+pub type zend_declarables = _zend_declarables;
+pub type zend_vm_stack = *mut _zend_vm_stack;
 pub type zend_ini_entry = _zend_ini_entry;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct _zend_compiler_globals {
+    pub bp_stack: zend_stack,
+    pub switch_cond_stack: zend_stack,
+    pub foreach_copy_stack: zend_stack,
+    pub object_stack: zend_stack,
+    pub declare_stack: zend_stack,
+    pub active_class_entry: *mut zend_class_entry,
+    pub list_llist: zend_llist,
+    pub dimension_llist: zend_llist,
+    pub list_stack: zend_stack,
+    pub function_call_stack: zend_stack,
+    pub compiled_filename: *mut ::std::os::raw::c_char,
+    pub zend_lineno: ::std::os::raw::c_int,
+    pub active_op_array: *mut zend_op_array,
+    pub function_table: *mut HashTable,
+    pub class_table: *mut HashTable,
+    pub filenames_table: HashTable,
+    pub auto_globals: *mut HashTable,
+    pub parse_error: zend_bool,
+    pub in_compilation: zend_bool,
+    pub short_tags: zend_bool,
+    pub asp_tags: zend_bool,
+    pub declarables: zend_declarables,
+    pub unclean_shutdown: zend_bool,
+    pub ini_parser_unbuffered_errors: zend_bool,
+    pub open_files: zend_llist,
+    pub catch_begin: ::std::os::raw::c_long,
+    pub ini_parser_param: *mut _zend_ini_parser_param,
+    pub interactive: ::std::os::raw::c_int,
+    pub start_lineno: zend_uint,
+    pub increment_lineno: zend_bool,
+    pub implementing_class: znode,
+    pub access_type: zend_uint,
+    pub doc_comment: *mut ::std::os::raw::c_char,
+    pub doc_comment_len: zend_uint,
+    pub compiler_options: zend_uint,
+    pub current_namespace: *mut zval,
+    pub current_import: *mut HashTable,
+    pub current_import_function: *mut HashTable,
+    pub current_import_const: *mut HashTable,
+    pub in_namespace: zend_bool,
+    pub has_bracketed_namespaces: zend_bool,
+    pub const_filenames: HashTable,
+    pub context: zend_compiler_context,
+    pub context_stack: zend_stack,
+    pub interned_strings_start: *mut ::std::os::raw::c_char,
+    pub interned_strings_end: *mut ::std::os::raw::c_char,
+    pub interned_strings_top: *mut ::std::os::raw::c_char,
+    pub interned_strings_snapshot_top: *mut ::std::os::raw::c_char,
+    pub interned_strings: HashTable,
+    pub script_encoding_list: *mut *const zend_encoding,
+    pub script_encoding_list_size: size_t,
+    pub multibyte: zend_bool,
+    pub detect_unicode: zend_bool,
+    pub encoding_declared: zend_bool,
+    pub static_members_table: *mut *mut *mut zval,
+    pub last_static_member: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout__zend_compiler_globals() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_compiler_globals>(),
+        856usize,
+        concat!("Size of: ", stringify!(_zend_compiler_globals))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_compiler_globals>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_compiler_globals))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_compiler_globals>())).bp_stack as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(bp_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).switch_cond_stack as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(switch_cond_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).foreach_copy_stack as *const _
+                as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(foreach_copy_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).object_stack as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(object_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).declare_stack as *const _ as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(declare_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).active_class_entry as *const _
+                as usize
+        },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(active_class_entry)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).list_llist as *const _ as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(list_llist)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).dimension_llist as *const _ as usize
+        },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(dimension_llist)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).list_stack as *const _ as usize
+        },
+        200usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(list_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).function_call_stack as *const _
+                as usize
+        },
+        216usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(function_call_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).compiled_filename as *const _
+                as usize
+        },
+        232usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(compiled_filename)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).zend_lineno as *const _ as usize
+        },
+        240usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(zend_lineno)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).active_op_array as *const _ as usize
+        },
+        248usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(active_op_array)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).function_table as *const _ as usize
+        },
+        256usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(function_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).class_table as *const _ as usize
+        },
+        264usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(class_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).filenames_table as *const _ as usize
+        },
+        272usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(filenames_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).auto_globals as *const _ as usize
+        },
+        344usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(auto_globals)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).parse_error as *const _ as usize
+        },
+        352usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(parse_error)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).in_compilation as *const _ as usize
+        },
+        353usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(in_compilation)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).short_tags as *const _ as usize
+        },
+        354usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(short_tags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_compiler_globals>())).asp_tags as *const _ as usize },
+        355usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(asp_tags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).declarables as *const _ as usize
+        },
+        360usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(declarables)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).unclean_shutdown as *const _ as usize
+        },
+        384usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(unclean_shutdown)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).ini_parser_unbuffered_errors
+                as *const _ as usize
+        },
+        385usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(ini_parser_unbuffered_errors)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).open_files as *const _ as usize
+        },
+        392usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(open_files)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).catch_begin as *const _ as usize
+        },
+        448usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(catch_begin)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).ini_parser_param as *const _ as usize
+        },
+        456usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(ini_parser_param)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).interactive as *const _ as usize
+        },
+        464usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(interactive)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).start_lineno as *const _ as usize
+        },
+        468usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(start_lineno)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).increment_lineno as *const _ as usize
+        },
+        472usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(increment_lineno)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).implementing_class as *const _
+                as usize
+        },
+        480usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(implementing_class)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).access_type as *const _ as usize
+        },
+        520usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(access_type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).doc_comment as *const _ as usize
+        },
+        528usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(doc_comment)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).doc_comment_len as *const _ as usize
+        },
+        536usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(doc_comment_len)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).compiler_options as *const _ as usize
+        },
+        540usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(compiler_options)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).current_namespace as *const _
+                as usize
+        },
+        544usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(current_namespace)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).current_import as *const _ as usize
+        },
+        552usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(current_import)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).current_import_function as *const _
+                as usize
+        },
+        560usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(current_import_function)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).current_import_const as *const _
+                as usize
+        },
+        568usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(current_import_const)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).in_namespace as *const _ as usize
+        },
+        576usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(in_namespace)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).has_bracketed_namespaces as *const _
+                as usize
+        },
+        577usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(has_bracketed_namespaces)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).const_filenames as *const _ as usize
+        },
+        584usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(const_filenames)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_compiler_globals>())).context as *const _ as usize },
+        656usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(context)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).context_stack as *const _ as usize
+        },
+        696usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(context_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).interned_strings_start as *const _
+                as usize
+        },
+        712usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(interned_strings_start)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).interned_strings_end as *const _
+                as usize
+        },
+        720usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(interned_strings_end)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).interned_strings_top as *const _
+                as usize
+        },
+        728usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(interned_strings_top)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).interned_strings_snapshot_top
+                as *const _ as usize
+        },
+        736usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(interned_strings_snapshot_top)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).interned_strings as *const _ as usize
+        },
+        744usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(interned_strings)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).script_encoding_list as *const _
+                as usize
+        },
+        816usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(script_encoding_list)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).script_encoding_list_size as *const _
+                as usize
+        },
+        824usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(script_encoding_list_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).multibyte as *const _ as usize
+        },
+        832usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(multibyte)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).detect_unicode as *const _ as usize
+        },
+        833usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(detect_unicode)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).encoding_declared as *const _
+                as usize
+        },
+        834usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(encoding_declared)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).static_members_table as *const _
+                as usize
+        },
+        840usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(static_members_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_compiler_globals>())).last_static_member as *const _
+                as usize
+        },
+        848usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_compiler_globals),
+            "::",
+            stringify!(last_static_member)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct _zend_executor_globals {
+    pub return_value_ptr_ptr: *mut *mut zval,
+    pub uninitialized_zval: zval,
+    pub uninitialized_zval_ptr: *mut zval,
+    pub error_zval: zval,
+    pub error_zval_ptr: *mut zval,
+    pub symtable_cache: [*mut HashTable; 32usize],
+    pub symtable_cache_limit: *mut *mut HashTable,
+    pub symtable_cache_ptr: *mut *mut HashTable,
+    pub opline_ptr: *mut *mut zend_op,
+    pub active_symbol_table: *mut HashTable,
+    pub symbol_table: HashTable,
+    pub included_files: HashTable,
+    pub bailout: *mut jmp_buf,
+    pub error_reporting: ::std::os::raw::c_int,
+    pub orig_error_reporting: ::std::os::raw::c_int,
+    pub exit_status: ::std::os::raw::c_int,
+    pub active_op_array: *mut zend_op_array,
+    pub function_table: *mut HashTable,
+    pub class_table: *mut HashTable,
+    pub zend_constants: *mut HashTable,
+    pub scope: *mut zend_class_entry,
+    pub called_scope: *mut zend_class_entry,
+    pub This: *mut zval,
+    pub precision: ::std::os::raw::c_long,
+    pub ticks_count: ::std::os::raw::c_int,
+    pub in_execution: zend_bool,
+    pub in_autoload: *mut HashTable,
+    pub autoload_func: *mut zend_function,
+    pub full_tables_cleanup: zend_bool,
+    pub no_extensions: zend_bool,
+    pub regular_list: HashTable,
+    pub persistent_list: HashTable,
+    pub argument_stack: zend_vm_stack,
+    pub user_error_handler_error_reporting: ::std::os::raw::c_int,
+    pub user_error_handler: *mut zval,
+    pub user_exception_handler: *mut zval,
+    pub user_error_handlers_error_reporting: zend_stack,
+    pub user_error_handlers: zend_ptr_stack,
+    pub user_exception_handlers: zend_ptr_stack,
+    pub error_handling: zend_error_handling_t,
+    pub exception_class: *mut zend_class_entry,
+    pub timeout_seconds: ::std::os::raw::c_int,
+    pub lambda_count: ::std::os::raw::c_int,
+    pub ini_directives: *mut HashTable,
+    pub modified_ini_directives: *mut HashTable,
+    pub error_reporting_ini_entry: *mut zend_ini_entry,
+    pub objects_store: zend_objects_store,
+    pub exception: *mut zval,
+    pub prev_exception: *mut zval,
+    pub opline_before_exception: *mut zend_op,
+    pub exception_op: [zend_op; 3usize],
+    pub current_execute_data: *mut _zend_execute_data,
+    pub current_module: *mut _zend_module_entry,
+    pub std_property_info: zend_property_info,
+    pub active: zend_bool,
+    pub start_op: *mut zend_op,
+    pub saved_fpu_cw_ptr: *mut ::std::os::raw::c_void,
+    pub saved_fpu_cw: fpu_control_t,
+    pub reserved: [*mut ::std::os::raw::c_void; 4usize],
+}
+#[test]
+fn bindgen_test_layout__zend_executor_globals() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_executor_globals>(),
+        1264usize,
+        concat!("Size of: ", stringify!(_zend_executor_globals))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_executor_globals>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_executor_globals))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).return_value_ptr_ptr as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(return_value_ptr_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).uninitialized_zval as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(uninitialized_zval)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).uninitialized_zval_ptr as *const _
+                as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(uninitialized_zval_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).error_zval as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(error_zval)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).error_zval_ptr as *const _ as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(error_zval_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).symtable_cache as *const _ as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(symtable_cache)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).symtable_cache_limit as *const _
+                as usize
+        },
+        328usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(symtable_cache_limit)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).symtable_cache_ptr as *const _
+                as usize
+        },
+        336usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(symtable_cache_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).opline_ptr as *const _ as usize
+        },
+        344usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(opline_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).active_symbol_table as *const _
+                as usize
+        },
+        352usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(active_symbol_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).symbol_table as *const _ as usize
+        },
+        360usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(symbol_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).included_files as *const _ as usize
+        },
+        432usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(included_files)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_executor_globals>())).bailout as *const _ as usize },
+        504usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(bailout)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).error_reporting as *const _ as usize
+        },
+        512usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(error_reporting)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).orig_error_reporting as *const _
+                as usize
+        },
+        516usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(orig_error_reporting)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).exit_status as *const _ as usize
+        },
+        520usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(exit_status)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).active_op_array as *const _ as usize
+        },
+        528usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(active_op_array)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).function_table as *const _ as usize
+        },
+        536usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(function_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).class_table as *const _ as usize
+        },
+        544usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(class_table)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).zend_constants as *const _ as usize
+        },
+        552usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(zend_constants)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_executor_globals>())).scope as *const _ as usize },
+        560usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(scope)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).called_scope as *const _ as usize
+        },
+        568usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(called_scope)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_executor_globals>())).This as *const _ as usize },
+        576usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(This)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).precision as *const _ as usize
+        },
+        584usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(precision)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).ticks_count as *const _ as usize
+        },
+        592usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(ticks_count)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).in_execution as *const _ as usize
+        },
+        596usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(in_execution)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).in_autoload as *const _ as usize
+        },
+        600usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(in_autoload)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).autoload_func as *const _ as usize
+        },
+        608usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(autoload_func)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).full_tables_cleanup as *const _
+                as usize
+        },
+        616usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(full_tables_cleanup)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).no_extensions as *const _ as usize
+        },
+        617usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(no_extensions)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).regular_list as *const _ as usize
+        },
+        624usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(regular_list)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).persistent_list as *const _ as usize
+        },
+        696usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(persistent_list)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).argument_stack as *const _ as usize
+        },
+        768usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(argument_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).user_error_handler_error_reporting
+                as *const _ as usize
+        },
+        776usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(user_error_handler_error_reporting)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).user_error_handler as *const _
+                as usize
+        },
+        784usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(user_error_handler)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).user_exception_handler as *const _
+                as usize
+        },
+        792usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(user_exception_handler)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).user_error_handlers_error_reporting
+                as *const _ as usize
+        },
+        800usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(user_error_handlers_error_reporting)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).user_error_handlers as *const _
+                as usize
+        },
+        816usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(user_error_handlers)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).user_exception_handlers as *const _
+                as usize
+        },
+        848usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(user_exception_handlers)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).error_handling as *const _ as usize
+        },
+        880usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(error_handling)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).exception_class as *const _ as usize
+        },
+        888usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(exception_class)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).timeout_seconds as *const _ as usize
+        },
+        896usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(timeout_seconds)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).lambda_count as *const _ as usize
+        },
+        900usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(lambda_count)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).ini_directives as *const _ as usize
+        },
+        904usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(ini_directives)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).modified_ini_directives as *const _
+                as usize
+        },
+        912usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(modified_ini_directives)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).error_reporting_ini_entry as *const _
+                as usize
+        },
+        920usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(error_reporting_ini_entry)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).objects_store as *const _ as usize
+        },
+        928usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(objects_store)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).exception as *const _ as usize
+        },
+        952usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(exception)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).prev_exception as *const _ as usize
+        },
+        960usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(prev_exception)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).opline_before_exception as *const _
+                as usize
+        },
+        968usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(opline_before_exception)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).exception_op as *const _ as usize
+        },
+        976usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(exception_op)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).current_execute_data as *const _
+                as usize
+        },
+        1120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(current_execute_data)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).current_module as *const _ as usize
+        },
+        1128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(current_module)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).std_property_info as *const _
+                as usize
+        },
+        1136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(std_property_info)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_executor_globals>())).active as *const _ as usize },
+        1200usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(active)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_executor_globals>())).start_op as *const _ as usize },
+        1208usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(start_op)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).saved_fpu_cw_ptr as *const _ as usize
+        },
+        1216usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(saved_fpu_cw_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_executor_globals>())).saved_fpu_cw as *const _ as usize
+        },
+        1224usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(saved_fpu_cw)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_executor_globals>())).reserved as *const _ as usize },
+        1232usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_executor_globals),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_ini_scanner_globals {
+    pub yy_in: *mut zend_file_handle,
+    pub yy_out: *mut zend_file_handle,
+    pub yy_leng: ::std::os::raw::c_uint,
+    pub yy_start: *mut ::std::os::raw::c_uchar,
+    pub yy_text: *mut ::std::os::raw::c_uchar,
+    pub yy_cursor: *mut ::std::os::raw::c_uchar,
+    pub yy_marker: *mut ::std::os::raw::c_uchar,
+    pub yy_limit: *mut ::std::os::raw::c_uchar,
+    pub yy_state: ::std::os::raw::c_int,
+    pub state_stack: zend_stack,
+    pub filename: *mut ::std::os::raw::c_char,
+    pub lineno: ::std::os::raw::c_int,
+    pub scanner_mode: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout__zend_ini_scanner_globals() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_ini_scanner_globals>(),
+        104usize,
+        concat!("Size of: ", stringify!(_zend_ini_scanner_globals))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_ini_scanner_globals>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_ini_scanner_globals))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_in as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_in)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_out as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_out)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_leng as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_leng)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_start as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_start)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_text as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_text)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_cursor as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_cursor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_marker as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_marker)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_limit as *const _ as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_limit)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).yy_state as *const _ as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(yy_state)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).state_stack as *const _ as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(state_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).filename as *const _ as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(filename)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).lineno as *const _ as usize
+        },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(lineno)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_scanner_globals>())).scanner_mode as *const _ as usize
+        },
+        100usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_scanner_globals),
+            "::",
+            stringify!(scanner_mode)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_php_scanner_globals {
+    pub yy_in: *mut zend_file_handle,
+    pub yy_out: *mut zend_file_handle,
+    pub yy_leng: ::std::os::raw::c_uint,
+    pub yy_start: *mut ::std::os::raw::c_uchar,
+    pub yy_text: *mut ::std::os::raw::c_uchar,
+    pub yy_cursor: *mut ::std::os::raw::c_uchar,
+    pub yy_marker: *mut ::std::os::raw::c_uchar,
+    pub yy_limit: *mut ::std::os::raw::c_uchar,
+    pub yy_state: ::std::os::raw::c_int,
+    pub state_stack: zend_stack,
+    pub heredoc_label_stack: zend_ptr_stack,
+    pub script_org: *mut ::std::os::raw::c_uchar,
+    pub script_org_size: size_t,
+    pub script_filtered: *mut ::std::os::raw::c_uchar,
+    pub script_filtered_size: size_t,
+    pub input_filter: zend_encoding_filter,
+    pub output_filter: zend_encoding_filter,
+    pub script_encoding: *const zend_encoding,
+}
+#[test]
+fn bindgen_test_layout__zend_php_scanner_globals() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_php_scanner_globals>(),
+        176usize,
+        concat!("Size of: ", stringify!(_zend_php_scanner_globals))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_php_scanner_globals>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_php_scanner_globals))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_in as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_in)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_out as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_out)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_leng as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_leng)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_start as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_start)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_text as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_text)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_cursor as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_cursor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_marker as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_marker)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_limit as *const _ as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_limit)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).yy_state as *const _ as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(yy_state)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).state_stack as *const _ as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(state_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).heredoc_label_stack as *const _
+                as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(heredoc_label_stack)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).script_org as *const _ as usize
+        },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(script_org)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).script_org_size as *const _
+                as usize
+        },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(script_org_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).script_filtered as *const _
+                as usize
+        },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(script_filtered)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).script_filtered_size as *const _
+                as usize
+        },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(script_filtered_size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).input_filter as *const _ as usize
+        },
+        152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(input_filter)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).output_filter as *const _ as usize
+        },
+        160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(output_filter)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_php_scanner_globals>())).script_encoding as *const _
+                as usize
+        },
+        168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_php_scanner_globals),
+            "::",
+            stringify!(script_encoding)
+        )
+    );
+}
 extern "C" {
     pub fn zend_init_compiler_data_structures(tsrm_ls: *mut *mut *mut ::std::os::raw::c_void);
 }
@@ -12686,6 +15762,81 @@ pub type zend_auto_global_callback = ::std::option::Option<
         tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
     ) -> zend_bool,
 >;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_auto_global {
+    pub name: *const ::std::os::raw::c_char,
+    pub name_len: uint,
+    pub auto_global_callback: zend_auto_global_callback,
+    pub jit: zend_bool,
+    pub armed: zend_bool,
+}
+#[test]
+fn bindgen_test_layout__zend_auto_global() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_auto_global>(),
+        32usize,
+        concat!("Size of: ", stringify!(_zend_auto_global))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_auto_global>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_auto_global))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_auto_global>())).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_auto_global),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_auto_global>())).name_len as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_auto_global),
+            "::",
+            stringify!(name_len)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_auto_global>())).auto_global_callback as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_auto_global),
+            "::",
+            stringify!(auto_global_callback)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_auto_global>())).jit as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_auto_global),
+            "::",
+            stringify!(jit)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_auto_global>())).armed as *const _ as usize },
+        25usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_auto_global),
+            "::",
+            stringify!(armed)
+        )
+    );
+}
+pub type zend_auto_global = _zend_auto_global;
 extern "C" {
     pub fn zend_register_auto_global(
         name: *const ::std::os::raw::c_char,
@@ -12733,6 +15884,7 @@ extern "C" {
     pub fn zend_get_opcode_name(opcode: zend_uchar) -> *const ::std::os::raw::c_char;
 }
 pub type zend_module_entry = _zend_module_entry;
+pub type zend_module_dep = _zend_module_dep;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _zend_module_entry {
@@ -13192,6 +16344,131 @@ pub type rsrc_dtor_func_t = ::std::option::Option<
         tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
     ),
 >;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_rsrc_list_dtors_entry {
+    pub list_dtor: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+    pub plist_dtor: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+    pub list_dtor_ex: rsrc_dtor_func_t,
+    pub plist_dtor_ex: rsrc_dtor_func_t,
+    pub type_name: *const ::std::os::raw::c_char,
+    pub module_number: ::std::os::raw::c_int,
+    pub resource_id: ::std::os::raw::c_int,
+    pub type_: ::std::os::raw::c_uchar,
+}
+#[test]
+fn bindgen_test_layout__zend_rsrc_list_dtors_entry() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_rsrc_list_dtors_entry>(),
+        56usize,
+        concat!("Size of: ", stringify!(_zend_rsrc_list_dtors_entry))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_rsrc_list_dtors_entry>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_rsrc_list_dtors_entry))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).list_dtor as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(list_dtor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).plist_dtor as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(plist_dtor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).list_dtor_ex as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(list_dtor_ex)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).plist_dtor_ex as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(plist_dtor_ex)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).type_name as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(type_name)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).module_number as *const _
+                as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(module_number)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).resource_id as *const _ as usize
+        },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(resource_id)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_rsrc_list_dtors_entry>())).type_ as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_rsrc_list_dtors_entry),
+            "::",
+            stringify!(type_)
+        )
+    );
+}
+pub type zend_rsrc_list_dtors_entry = _zend_rsrc_list_dtors_entry;
 extern "C" {
     pub fn zend_register_list_destructors(
         ld: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
@@ -13241,6 +16518,25 @@ extern "C" {
         type_: ::std::os::raw::c_int,
         tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_list_addref(
+        id: ::std::os::raw::c_int,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_list_delete(
+        id: ::std::os::raw::c_int,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_list_find(
+        id: ::std::os::raw::c_int,
+        type_: *mut ::std::os::raw::c_int,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn zend_register_resource(
@@ -13382,6 +16678,56 @@ extern "C" {
         given_kind: *const ::std::os::raw::c_char,
         tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_vm_stack {
+    pub top: *mut *mut ::std::os::raw::c_void,
+    pub end: *mut *mut ::std::os::raw::c_void,
+    pub prev: zend_vm_stack,
+}
+#[test]
+fn bindgen_test_layout__zend_vm_stack() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_vm_stack>(),
+        24usize,
+        concat!("Size of: ", stringify!(_zend_vm_stack))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_vm_stack>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_vm_stack))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_vm_stack>())).top as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_vm_stack),
+            "::",
+            stringify!(top)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_vm_stack>())).end as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_vm_stack),
+            "::",
+            stringify!(end)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_vm_stack>())).prev as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_vm_stack),
+            "::",
+            stringify!(prev)
+        )
+    );
 }
 extern "C" {
     pub fn zend_get_executed_filename(
@@ -13809,8 +17155,23 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn _zend_get_parameters_array(
+        ht: ::std::os::raw::c_int,
+        param_count: ::std::os::raw::c_int,
+        argument_array: *mut *mut zval,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn zend_get_parameters_ex(param_count: ::std::os::raw::c_int, ...)
         -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn _zend_get_parameters_array_ex(
+        param_count: ::std::os::raw::c_int,
+        argument_array: *mut *mut *mut zval,
+        tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn zend_copy_parameters_array(
@@ -15414,6 +18775,96 @@ fn bindgen_test_layout__php_output_handler() {
     );
 }
 pub type php_output_handler = _php_output_handler;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_output_globals {
+    pub flags: ::std::os::raw::c_int,
+    pub handlers: zend_stack,
+    pub active: *mut php_output_handler,
+    pub running: *mut php_output_handler,
+    pub output_start_filename: *const ::std::os::raw::c_char,
+    pub output_start_lineno: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout__zend_output_globals() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_output_globals>(),
+        56usize,
+        concat!("Size of: ", stringify!(_zend_output_globals))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_output_globals>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_output_globals))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_output_globals>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_output_globals),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_output_globals>())).handlers as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_output_globals),
+            "::",
+            stringify!(handlers)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_output_globals>())).active as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_output_globals),
+            "::",
+            stringify!(active)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_output_globals>())).running as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_output_globals),
+            "::",
+            stringify!(running)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_output_globals>())).output_start_filename as *const _
+                as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_output_globals),
+            "::",
+            stringify!(output_start_filename)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_output_globals>())).output_start_lineno as *const _
+                as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_output_globals),
+            "::",
+            stringify!(output_start_lineno)
+        )
+    );
+}
+pub type zend_output_globals = _zend_output_globals;
 extern "C" {
     pub static mut output_globals_id: ts_rsrc_id;
 }
@@ -18071,6 +21522,48 @@ extern "C" {
         tsrm_ls: *mut *mut *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_ini_parser_param {
+    pub ini_parser_cb: zend_ini_parser_cb_t,
+    pub arg: *mut ::std::os::raw::c_void,
+}
+#[test]
+fn bindgen_test_layout__zend_ini_parser_param() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_ini_parser_param>(),
+        16usize,
+        concat!("Size of: ", stringify!(_zend_ini_parser_param))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_ini_parser_param>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_ini_parser_param))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_ini_parser_param>())).ini_parser_cb as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_parser_param),
+            "::",
+            stringify!(ini_parser_cb)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_zend_ini_parser_param>())).arg as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_ini_parser_param),
+            "::",
+            stringify!(arg)
+        )
+    );
+}
+pub type zend_ini_parser_param = _zend_ini_parser_param;
 extern "C" {
     pub fn php_init_config(tsrm_ls: *mut *mut *mut ::std::os::raw::c_void)
         -> ::std::os::raw::c_int;
@@ -18436,6 +21929,51 @@ extern "C" {
 extern "C" {
     pub fn php_get_uname(mode: ::std::os::raw::c_char) -> *mut ::std::os::raw::c_char;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _zend_extension_version_info {
+    pub zend_extension_api_no: ::std::os::raw::c_int,
+    pub build_id: *mut ::std::os::raw::c_char,
+}
+#[test]
+fn bindgen_test_layout__zend_extension_version_info() {
+    assert_eq!(
+        ::std::mem::size_of::<_zend_extension_version_info>(),
+        16usize,
+        concat!("Size of: ", stringify!(_zend_extension_version_info))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_zend_extension_version_info>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_zend_extension_version_info))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_extension_version_info>())).zend_extension_api_no
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension_version_info),
+            "::",
+            stringify!(zend_extension_api_no)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_zend_extension_version_info>())).build_id as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_zend_extension_version_info),
+            "::",
+            stringify!(build_id)
+        )
+    );
+}
+pub type zend_extension_version_info = _zend_extension_version_info;
 pub type zend_extension = _zend_extension;
 pub type startup_func_t = ::std::option::Option<
     unsafe extern "C" fn(extension: *mut zend_extension) -> ::std::os::raw::c_int,
