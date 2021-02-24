@@ -8,4 +8,3 @@ edition = "2018"
 [dependencies]
 pproc = { path = "pproc" }
 php-5x = { path = "../php-5x" }
-"php-5x-sys" = {path = "../sys/php-5x-sys"}

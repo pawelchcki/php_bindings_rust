@@ -8,7 +8,7 @@ edition = "2018"
 "php-5x" = {path = "../php-5x"}
 libc = "0.2.0"
 php-test-macros = {path = "../php-5x/test-macros"}
-php-5x-sys = { path = "../sys/php-5x-sys" }
+php-all-sys = "0.0.1"
 
 [lib]
 name = "test_php"

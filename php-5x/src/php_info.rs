@@ -1,6 +1,6 @@
 use std::ffi::{CStr};
 
-use php_5x_sys::php56;
+use php_all_sys::php56;
 use crate::cstr;
 
 pub struct InsideTable {

@@ -1,6 +1,6 @@
 // use std::ffi::CStr;
 //
-// use php_5x_sys::php56 as sys;
+// use php_all_sys::php56 as sys;
 
 // type Callback = unsafe extern "C" fn(type_: std::os::raw::c_int, module_number: std::os::raw::c_int) -> std::os::raw::c_int;
 

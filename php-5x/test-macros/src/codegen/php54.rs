@@ -5,7 +5,7 @@ use syn::Path;
 use super::Args;
 
 pub fn foo(init_fn: Option<Path>, args: Args) -> syn::Result<TokenStream2> {
-    let sys = quote!(php_5x_sys::php54);
+    let sys = quote!(php_all_sys::php54);
     let none: syn::Path = syn::parse2(quote!(None))?;
     let module_startup_function = init_fn.unwrap_or(none);
     let version = args

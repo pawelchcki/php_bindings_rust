@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use php_5x_sys::php56::zend_module_entry;
+    use php_all_sys::php56::zend_module_entry;
     use std::ffi::CStr;
     fn from_c_str<'a>(ptr: *const std::os::raw::c_char) -> &'a str {
         unsafe { CStr::from_ptr(ptr) }.to_str().unwrap()

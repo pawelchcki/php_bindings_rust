@@ -1,7 +1,5 @@
 [workspace]
 members = [
-    "sys/sys-build",
-    "sys/php-5x-sys",
     "php-5x",
     "php-5x/test-macros",
     "test_php", 

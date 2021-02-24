@@ -97,7 +97,7 @@ fn module_info_function_ptr(inner_macros: &Vec<InnerMacros>) -> Option<&syn::Ide
 }
 
 pub fn render_mod(inner_macros: &Vec<InnerMacros>, args: Args) -> syn::Result<TokenStream2> {
-    let sys = quote!(php_5x_sys::php56);
+    let sys = quote!(php_all_sys::php56);
     let none: syn::Expr = syn::parse2(quote!(None))?;
     let module_startup_function = module_startup_function_ptr(inner_macros)
         .map(|f| syn::parse2::<syn::Expr>(quote! (Some(#f))))

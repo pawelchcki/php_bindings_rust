@@ -6,7 +6,7 @@ pub mod php56;
 
 pub mod php_info;
 
-use php_5x_sys::php56 as sys;
+use php_all_sys::php56 as sys;
 
 type Exec = unsafe extern "C" fn(execute_data: *mut sys::zend_execute_data);
 static mut BACKUP: option::Option<Exec> = None;
